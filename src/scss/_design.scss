@@ -8,7 +8,8 @@ $input-background:hsl(189, 41%, 97%);
 $label-color:hsl(186, 14%, 43%);
 $results-gray:hsl(184, 14%, 56%);
 $neutral-900:hsl(0, 0%, 100%);
-
+$error:hsl(13, 69%, 71%);
+$hover:hsl(173, 61%, 77%);
 /////////////////////////////////////////
 /// RESET
 #root{
@@ -64,8 +65,17 @@ h1{
     margin-right: 1rem;
     border-radius: 5px;
     max-width: 70vw;
+    &:has(input:empty){
+        outline: none !important ;
+    }
+    &:has(input:valid){
+        outline: 1px solid $accent;
+    }
+    &:has(input:invalid){
+        outline: 1px solid $error;
+    }
     input{
-        // background-color: red;
+        
         background-color: $input-background;
         flex-grow: 1;
         text-align: right;
@@ -74,6 +84,7 @@ h1{
         border-radius: 5px;
         font-size: 1.5rem;
         max-width: 70vw;
+        
     }
     img{
         object-fit: contain;
@@ -81,14 +92,25 @@ h1{
         min-height: 0.875rem;
     }
 }
+.error{
+    color: $error;
+    margin-left: auto;
+    display: none;
+}
+.error.show{
+    display: block;
+}
 .mainLabel{
     font-size: 1rem;
     color: $label-color;
-    
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: .5rem;
 }
 .numberOfPeople{
     margin-block:0 2rem;
-    
 }
 
 .percentagesWrapper{
@@ -97,6 +119,20 @@ h1{
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1rem;
+    // &:has(#custom:valid){
+    //     label{
+    //         background-color: $primary;
+    //         color: $neutral-900;
+    //     }
+    // }
+    // &:has(#custom:empty){
+    //     label{
+    //         input:checked ~ & {
+    //             background-color: $accent;
+    //             color: $primary;
+    //         }
+    //     }
+    // }
 }
 .selectTip{
     font-size: 1rem;
@@ -107,7 +143,7 @@ h1{
     display: flex;
     width: fit-content;
     width: calc(50% - .5rem);
-    max-width: 45%;
+    cursor: pointer;
     label{
         background-color: $primary;
         color: $neutral-900;
@@ -116,8 +152,27 @@ h1{
         padding: .25rem 1rem;
         border-radius: 5px;
         font-size: 1.5rem;
+        transition: 150ms linear;
+    }
+    label:hover, label:focus, label:active{
+        background-color: $hover;
+        color: $primary;
+        transition: 150ms linear;
+        cursor: pointer;
     }
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Dla Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 
 label{
     input:checked ~ & {
@@ -183,11 +238,68 @@ button{
     padding: .5rem;
     border-radius: 5px;
     text-transform: uppercase;
-    font-size: 1.25rem;    
+    font-size: 1.25rem;
+    transition: 150ms linear;
+    &:hover, &:focus, &:active{
+        cursor: pointer;
+        transition: 150ms linear;
+        background-color: $hover;
+        color: $primary;
+    }    
 }
 
 
 
 @media only screen and (min-width: 768px) { 
-    
+    main{
+        max-width: 60%;
+        margin-inline: auto;
+    }
+    main{
+        flex-grow: 0;
+        border-radius: 25px;
+    }
+    .customPercentageComponent{
+        overflow: hidden;
+        input{
+            max-width: 100%;
+        }
+       
+    }
+}
+
+@media only screen and (min-width: 1024px) {}
+@media only screen and (min-width: 1366px) {
+    main{
+        max-width: 70%;
+        padding: 2rem;
+        max-width: 1000px;
+    }
+    h1{
+        margin-block: 10vh;
+    }
+
+    .percentageComponent, .customPercentageComponent{
+            width: calc(33% - 1rem);
+    }
+
+    form{
+        display: flex;
+        gap: 3rem;
+        section{
+            max-width: calc(50% - 1.5rem);
+        }
+    }
+
+    .mainInputWrapper{
+        margin-right: 0;
+    }
+    .resultsSection{
+        flex-grow: 1;
+        padding: 2.5rem;
+        gap: 3rem;
+        button{
+            margin-top: auto;
+        }
+    }
 }
